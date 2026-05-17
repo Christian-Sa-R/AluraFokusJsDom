@@ -5,7 +5,6 @@ const curtoBt = document.querySelector('.app__card-button--curto');
 const longoBt = document.querySelector('.app__card-button--longo');
 const botoes = document.querySelectorAll('.app__card-button');
 const playPauseBt = document.querySelector('#start-pause');
-const textoPlayPauseBt = document.querySelector('.app__card-primary-button--text');
 const statusImg = document.querySelector('.app__image');
 const textoTitulo = document.querySelector('.app__title');
 const imgPlayPause = document.querySelector('.app__card-primary-butto-icon');
@@ -80,10 +79,10 @@ playPauseBt.addEventListener('click', () =>{
     iniciarOuPausar();
     if (imgPlayPause.getAttribute('src') === 'imagens/play_arrow.png') {
         imgPlayPause.setAttribute('src', 'imagens/pause.png')
-        textoPlayPauseBt.innerHTML = 'Pausar'
+        imgPlayPause.nextElementSibling.innerHTML = 'Pausar'
     } else {
         imgPlayPause.setAttribute('src', 'imagens/play_arrow.png')
-        textoPlayPauseBt.innerHTML = 'Começar'
+        imgPlayPause.nextElementSibling.innerHTML = 'Começar'
     }
 });
 
