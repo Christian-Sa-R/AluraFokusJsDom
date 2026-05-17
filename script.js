@@ -5,14 +5,20 @@ const curtoBt = document.querySelector('.app__card-button--curto');
 const longoBt = document.querySelector('.app__card-button--longo');
 const botoes = document.querySelectorAll('.app__card-button');
 const alterarMusica = document.querySelector('#alternar-musica');
-const musica = new Audio('sons/luna-rise-part-one.mp3');
-    musica.loop = true;
 const playPauseBt = document.querySelector('#start-pause');
 const statusImg = document.querySelector('.app__image');
 const textoTitulo = document.querySelector('.app__title');
 const tempoFoco = 1500;
 const tempoDescansoCurto = 300;
 const tempoDescansoLongo = 900;
+const musica = new Audio('sons/luna-rise-part-one.mp3');
+    musica.loop = true;
+const audioPlay = new Audio('sons/play.wav');
+const audioPause = new Audio('sons/pause.mp3');
+const audioTimeOut = new Audio('sons/beep.mp3');
+
+let intervalorId = null;
+let tempoDecorrido = 5;
 
 function alterarContexto(contexto){
     botoes.forEach(e => { //retira a classe "active" de todos os botoes
@@ -42,6 +48,33 @@ function alterarContexto(contexto){
             break;
     }
 }
+
+//inicio do bloco responsavel pelo temporizador
+const contagemRegressiva = () => {
+    if (tempoDecorrido <= 0) {
+        finalizar();
+        audioTimeOut.play();
+        alert('Temporizador finalizado');
+        return;
+    }
+    tempoDecorrido -= 1;
+    console.log(`Temporizador: ${tempoDecorrido}`);
+}
+function iniciarOuPausar () {
+    if (intervalorId) {
+        finalizar();
+        audioPause.play();
+        return;
+    } else{
+        audioPlay.play();
+    }
+    intervalorId = setInterval(contagemRegressiva, 1000);
+}
+function finalizar() {
+    clearInterval(intervalorId);
+    intervalorId = null;
+}
+playPauseBt.addEventListener('click', iniciarOuPausar);
 
 focoBt.addEventListener('click', () => {
     alterarContexto('foco');
